@@ -1,3 +1,22 @@
+#Project: Endotypes 
+#
+# Purpose: Clustering of the bio-markers
+# Version: 1 
+# Date: 14/12/22
+# Author:HPF
+#
+# Input: DataSet
+#       
+# Output: This is only an sample base in CL1 transfer learning XGBoost base
+#         option also for ensemble classification with lasso and gmmnet 
+# Add: N/A
+#
+# Dependencies:
+#
+# Notes: 
+#
+
+
 # =    1 working space =========================================================
 setwd("G:/")
 #if (! dir.exists("Project_IPF")) dir.create("Project_IPF")
@@ -77,9 +96,8 @@ Test$patientid=NULL
 
 set.seed(2019)
 rec_obj <- recipe(Class ~ ., data =Train) %>%
-  step_impute_knn(all_predictors()) %>%
-#  step_center(all_predictors()) %>%
-#  step_scale(all_predictors()) %>%
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors()) %>%
   step_dummy(all_predictors(), -all_numeric()) %>%
   check_missing(all_predictors())
 
@@ -250,18 +268,18 @@ xgbTreeGrid <- expand.grid(nrounds = ntree,
                            min_child_weight = c(3,4,5))
 
 
-glmnetGrid <- expand.grid(alpha = 1, lambda = seq(0.00001,0.01,by = 0.0001))
+#glmnetGrid <- expand.grid(alpha = 1, lambda = seq(0.00001,0.01,by = 0.0001))
 
-svmGrid <- expand.grid(sigma= 2^seq(-11, -16, -0.5), C= 2^seq(4,9,1))
+#svmGrid <- expand.grid(sigma= 2^seq(-11, -16, -0.5), C= 2^seq(4,9,1))
 
 
 modelList <<- caretList(x = subset(train_2, select=-c(Class)),
                         y = train_2$Class,
                         trControl=trControl,
                         metric="accuracy",
-                        tuneList=list(xgbTree = caretModelSpec(method="xgbTree",tuneGrid = xgbTreeGrid),
-                                      glmnet=caretModelSpec(method="glmnet", tuneGrid = glmnetGrid),
-                                      svmRadial = caretModelSpec(method="svmRadial", tuneGrid = svmGrid, preProcess=c("nzv", "pca"))))
+                        tuneList=list(xgbTree = caretModelSpec(method="xgbTree",tuneGrid = xgbTreeGrid)))
+                                      #glmnet=caretModelSpec(method="glmnet", tuneGrid = glmnetGrid),
+                                      #svmRadial = caretModelSpec(method="svmRadial", tuneGrid = svmGrid, preProcess=c("nzv", "pca"))))
 
 modelCor(resamples(modelList))
 

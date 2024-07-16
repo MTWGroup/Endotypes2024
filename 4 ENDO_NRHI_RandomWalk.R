@@ -1,17 +1,17 @@
 #Project: Endotypes (Scrip 2) 
 #
-# Purpose: minimal Clustering of the biomarkers - Random Walk
+# Purpose:Clustering of the biomarkers - Random-Walk
 # Version: 2  
 # Date: 25/10/22
 # Author:HPF
 #
-# Input: DataSet - cluster biomarkers 
+# Input: Dataset - cluster bio markers 
 #       
 # Output: minimal clustering validation -by random walker 
 #
 # Add: N/A
 #
-# Dependencies: NRHI 10 RandomWalk 251022
+# Dependencies: NRHI 10 Random Walk 251022
 #
 # Notes: jump from NHRI 7 
 

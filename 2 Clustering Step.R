@@ -16,7 +16,7 @@
 #
 # Dependencies:
 #
-# Notes: jump to script 3
+# Notes: 
 #
 # =    1 working space =========================================================
 setwd("G:/")
@@ -108,7 +108,7 @@ MWDx1D50 = MWDx1D50[!remove.samples, ]
 #Hopkins statistic: If the value of Hopkins statistic is close to 1 (far above 0.5), 
 #then we can conclude that the dataset is significantly clusterable
 
-OptCl50<-fviz_nbclust(MWDx1D50, FUN= hcut, method = "wss", k.max= 20)+
+OptCl50<-fviz_nbclust(MWDx1D50, FUN= hcut, method = "wss", k.max= 20)+  #elbow in function is possible to change it to kmeans,som,etc....
   labs(subtitle = "", tag = " ", title = " ")
 OptCl50
 
@@ -311,7 +311,7 @@ strwrap(coGmm, width = 80)
 
 set.seed(2022)
 SOM_3 <- ccomb_class$`3`[, "SOM"]
-sig_objSOM <- sigclust(MWDx1D50, k = 3, nsim = 100, labflag = 0, label = GMM_3)
+sig_objSOM <- sigclust(MWDx1D50, k = 3, nsim = 100, labflag = 0, label = SOM_3)
 coSOM <- capture.output(str(sig_objSOM))
 strwrap(coSOM, width = 80)
 
@@ -473,3 +473,4 @@ tiff("Cluster UMAP vissaulization 226022.tiff",  res=dpi, height=8*dpi, width=8*
 plot.UMAP(MDumap,UMAP.labels, cex = 1.5 )
 dev.off()
 
+write.csv(MWDx1D50, file="MWDataBIO_Clusters_463x51_070622.csv", na="")
